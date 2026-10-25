@@ -1,0 +1,6 @@
+{
+  "coupons": [
+    { "id": "C1", "name": "麦辣鸡腿堡减5元", "type": "minus", "value": 5, "scope": ["M01"] },
+    { "id": "C2", "name": "全场满20减3", "type": "minus", "value": 3, "scope": [] }
+  ]
+}

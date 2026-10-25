@@ -1,0 +1,7 @@
+{
+  "meals": [
+    { "code": "M01", "name": "麦辣鸡腿堡", "price": 21.0, "price_unit": "yuan" },
+    { "code": "M02", "name": "巨无霸", "price": 24.0, "price_unit": "yuan" },
+    { "code": "M03", "name": "薯条(中)", "price": 12.0, "price_unit": "yuan" }
+  ]
+}

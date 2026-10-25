@@ -1,0 +1,7 @@
+{
+  "products": [
+    { "id": "P1", "name": "麦辣鸡腿堡", "points_cost": 1500, "cash_value": 21.0 },
+    { "id": "P2", "name": "巨无霸", "points_cost": 2200, "cash_value": 24.0 },
+    { "id": "P3", "name": "可口可乐(积分)", "points_cost": 800, "cash_value": 6.0 }
+  ]
+}

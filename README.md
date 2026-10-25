@@ -36,6 +36,9 @@ python3 src/run.py
 # 3) 有 Token？走真实麦当劳 MCP（Token 在 https://open.mcd.cn 免费申请）
 export MCD_MCP_TOKEN="你的麦当劳MCP Token"
 python3 src/run.py 麦辣鸡腿堡
+
+# 4) 真实数据总览（营养密度 + 积分商城审计，只读、不下单）
+python3 src/live.py
 ```
 
 自测（不依赖网络）：
@@ -43,6 +46,9 @@ python3 src/run.py 麦辣鸡腿堡
 ```bash
 python3 tests/selftest.py
 ```
+
+> 真实数据实测示例（`src/live.py`）：积分商城里「21.9元巨无霸可乐组合 = 800 积分（等价¥8.00）」、
+> 「28.9元板烧四件套 = 800 积分」等，用积分换比现金买便宜一大截——正是「该掏钱还是花积分」的真实答案。
 
 ## 🧩 工作原理
 
@@ -68,6 +74,7 @@ mcd-frugal/
 │   ├── mcp_fetch.py      # MCP 原始返回 → 归一化结构（处理分/元单位）
 │   ├── optimizer.py      # 券+积分统一决策 + 积分审计（核心纯逻辑）
 │   ├── demo.py           # 离线演示（内置样本数据）
+│   ├── live.py           # 真实数据总览（营养密度 + 积分商城审计，只读）
 │   └── run.py            # CLI：有 Token 走真实 MCP，无 Token 降级演示
 ├── sample_data/          # 模拟麦当劳 MCP 返回的样本（离线用）
 ├── tests/selftest.py     # 离线自测

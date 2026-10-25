@@ -184,6 +184,53 @@ class McdMcpClient:
         except json.JSONDecodeError:
             return None
 
+    @staticmethod
+    def _extract_first_json(s):
+        """在文本中抽取第一个完整 JSON 对象（用括号深度匹配，忽略字符串内的 {}）。"""
+        start = s.find("{")
+        if start < 0:
+            return None
+        depth = 0
+        in_str = False
+        esc = False
+        for idx in range(start, len(s)):
+            ch = s[idx]
+            if in_str:
+                if esc:
+                    esc = False
+                elif ch == "\\":
+                    esc = True
+                elif ch == '"':
+                    in_str = False
+                continue
+            if ch == '"':
+                in_str = True
+            elif ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    candidate = s[start:idx + 1]
+                    try:
+                        return json.loads(candidate)
+                    except json.JSONDecodeError:
+                        return None
+        return None
+
+    @staticmethod
+    def extract_payload(result, marker="Original Response"):
+        """麦当劳 MCP 的返回被「描述性 markdown + 原始 JSON」包裹，
+        这里先定位 'Original Response' 之后的第一个完整 JSON 对象。"""
+        text = McdMcpClient.extract_text(result)
+        if not text:
+            return None
+        i = text.find(marker)
+        segment = text[i + len(marker):] if i >= 0 else text
+        obj = McdMcpClient._extract_first_json(segment)
+        if obj is None and i >= 0:
+            obj = McdMcpClient._extract_first_json(text)
+        return obj
+
 
 def from_env(endpoint=DEFAULT_ENDPOINT):
     import os
